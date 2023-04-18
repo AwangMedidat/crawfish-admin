@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:8008");
 
 function App() {
+  const [sensorData, setSensorData] = useState({
+    temperature: 0,
+    ph: 0,
+    ppm: 0,
+    buzzer_state: 0,
+  });
+
+  useEffect(() => {
+    socket.on("sensor data", (data) => {
+      setSensorData(data);
+    });
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <p>Temperature: {sensorData.temperature}</p>
+        <p>pH: {sensorData.ph}</p>
+        <p>PPM: {sensorData.ppm}</p>
+        <p>Buzzer State: {sensorData.buzzer_state === "14" ? "On" : "Off"}</p>
+      </div>
     </div>
   );
 }
