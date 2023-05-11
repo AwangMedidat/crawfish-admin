@@ -1,0 +1,97 @@
+.SignGlass {
+    display: grid;
+    height: 55%;
+    width: 50%;
+    background: var(--glass);
+    border-radius: 2rem;
+    /* gap: 16px; */
+    /* grid-template-columns: 11rem auto 20rem; */
+    overflow: hidden;
+  }
+  
+  .signin-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 50px;
+    border-radius: 5px;
+    /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); */
+  }
+  
+  .signin-container h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .signin-container input[type="text"],
+  .signin-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    margin-bottom: 20px;
+    font-size: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .signin-container button[type="submit"] {
+    background-color: var(--glass);
+    color: var(--black);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .signin-container button[type="submit"]:hover {
+    background-color: var(--orange);
+  }
+  
+  .password-input-container {
+    position: relative;
+  }
+  
+  .password-visibility-button {
+    position: absolute;
+    top: 40%;
+    right: 1px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .password-visibility-button:focus {
+    outline: none;
+  }
+  
+  .password-visibility-button:hover {
+    color: var(--black);
+  }
+  
+  .signup-link {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .signup-link p {
+    display: inline-block;
+    margin-right: 10px;
+    /* font-size: 16px; */
+  }
+  
+  .signup-link a {
+    display: inline-block;
+    color: var(--gray);
+    font-size: 16px;
+    text-decoration: none;
+    border-bottom: 2px solid var(--gray);
+    transition: border-bottom 0.3s ease;
+  }
+  
+  .signup-link a:hover {
+    border-bottom: 2px solid var(--black);
+  }
