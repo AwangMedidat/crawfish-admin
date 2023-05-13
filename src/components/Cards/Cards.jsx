@@ -10,9 +10,12 @@ import {
   UilTear,
 } from "@iconscout/react-unicons";
 import Card from "../Card/Card";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 const socket = io.connect("http://localhost:8008");
 
 const Cards = () => {
+  const { id } = useParams();
   const [sensorData, setSensorData] = useState({
     temperature: 0,
     ph: 0,
@@ -32,9 +35,9 @@ const Cards = () => {
 
   const pHKondisi = () => {
     if (sensorData.ph < 6.5) {
-      return "pH dibawah batas Normal";
+      return "Keasaman dibawah batas Normal";
     } else if (sensorData.ph > 8) {
-      return "pH diatas batas Normal";
+      return "Keasaman diatas batas Normal";
     } else {
       return "Normal";
     }
@@ -52,6 +55,27 @@ const Cards = () => {
     socket.on("sensor data", (data) => {
       setSensorData(data);
     });
+
+    const obj = {
+      temperature: sensorData.temperature,
+      ph: sensorData.ph,
+      ppm: sensorData.ppm,
+      kolam_id: id,
+    };
+
+    axios
+      .post("http://localhost:8008/update-sensor", obj)
+      .then((res) => {
+        console.log(res, "<<< data baca");
+        if (res.data.Status === "Success") {
+          // window.location.reload();
+        } else {
+          alert("Error");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
   return (
     <div className="Cards">
@@ -77,7 +101,7 @@ const Cards = () => {
       </div>
       <div className="parentContainer" key={2}>
         <Card
-          title={"pH"}
+          title={"Keasaman"}
           color={{
             backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
             boxShadow: "0px 10px 20px 0px #FDC0C7",
@@ -87,7 +111,7 @@ const Cards = () => {
           png={UilFlask}
           series={[
             {
-              name: "pH",
+              name: "Keasaman",
               data: [10, 100, 50, 70, 80, 30, 40],
             },
           ]}

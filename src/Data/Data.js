@@ -102,15 +102,6 @@ export const cardsDataKolam = [
       backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
       boxShadow: "0px 10px 20px 0px #FDC0C7",
     },
-    barValue: 70,
-    value: "25,970",
-    png: UilUsdSquare,
-    series: [
-      {
-        name: "Sales",
-        data: [31, 40, 28, 51, 42, 109, 100],
-      },
-    ],
   },
   {
     id: 2,
@@ -119,15 +110,6 @@ export const cardsDataKolam = [
       backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
       boxShadow: "0px 10px 20px 0px #FDC0C7",
     },
-    barValue: 80,
-    value: "14,270",
-    png: UilMoneyWithdrawal,
-    series: [
-      {
-        name: "Revenue",
-        data: [10, 100, 50, 70, 80, 30, 40],
-      },
-    ],
   },
 ];
 

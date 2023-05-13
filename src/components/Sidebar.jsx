@@ -6,6 +6,7 @@ import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
@@ -21,6 +22,18 @@ const Sidebar = () => {
     },
   };
   console.log(window.innerWidth);
+
+  const handleLogout = () => {
+    axios
+      .get("http://localhost:8008/logout")
+      .then((res) => {
+        // location.reload(true);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <>
       <div
@@ -58,7 +71,7 @@ const Sidebar = () => {
           })}
           {/* signoutIcon */}
           <div className="menuItem">
-            <a href="/signin">
+            <a href="/signin" onClick={handleLogout}>
               <UilSignOutAlt />
             </a>
           </div>

@@ -6,37 +6,35 @@ import MainDash from "./components/MainDash/MainDash";
 import RightSide from "./components/RigtSide/RightSide";
 import Sidebar from "./components/Sidebar";
 import Cards from "./components/Cards/Cards";
+import axios from "axios";
 // const socket = io.connect("http://localhost:8008");
 
 function HomeDetail() {
   const { id } = useParams();
-  // const [sensorData, setSensorData] = useState({
-  //   temperature: 0,
-  //   ph: 0,
-  //   ppm: 0,
-  //   buzzer_state: 0,
-  // });
+  const [namaKolam, setNamaKolam] = useState();
 
-  // useEffect(() => {
-  //   socket.on("sensor data", (data) => {
-  //     setSensorData(data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8008/kolamId/${id}`)
+      .then((res) => {
+        console.log(res, "<<< data kolam by id");
+        if (res.data.Status === "Success") {
+          setNamaKolam(res.data.data[0].nama_kolam);
+        } else {
+          alert("Error");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
   return (
     <div className="AppGlass">
       <Sidebar />
       <div className="MainDash">
-        {<h1>{`Detail Kolam ${id}`}</h1>}
+        {<h1>{`Detail ${namaKolam}`}</h1>}
         <Cards />
       </div>
-      {/* <MainDash /> */}
-      {/* <RightSide/> */}
-      {/* <div>
-          <p>Temperature: {sensorData.temperature}</p>
-          <p>pH: {sensorData.ph}</p>
-          <p>PPM: {sensorData.ppm}</p>
-          <p>Buzzer State: {sensorData.buzzer_state === "14" ? "On" : "Off"}</p>
-        </div> */}
     </div>
   );
 }

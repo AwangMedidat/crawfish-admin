@@ -44,8 +44,8 @@ function CompactCard({ param, setExpanded }) {
         /> */}
       </div>
       <div className="detail">
-        {/* <Png />
-        <span>${param.value}</span> */}
+        {/* <Png /> */}
+        <span>Jumlah Lobster: {param.value}</span>
         <a href={`/detail/${param.id}`}>
           <span>Detail</span>
         </a>

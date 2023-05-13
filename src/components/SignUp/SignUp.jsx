@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -9,14 +10,34 @@ function SignUp() {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [banyakKolam, setBanyakKolam] = useState();
+  // const [banyakKolam, setBanyakKolam] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("username ", username);
     console.log("email ", email);
     console.log("password ", password);
-    navigate("/signin");
+    // console.log("Banyak Kolam ", banyakKolam);
+
+    const obj = {
+      username: username,
+      email: email,
+      password: password,
+      // banyak_kolam: banyakKolam,
+    };
+
+    axios
+      .post("http://localhost:8008/signup", obj)
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          navigate("/signin");
+        } else {
+          alert("Error");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const togglePasswordVisibility = () => {
@@ -54,18 +75,18 @@ function SignUp() {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <label>Banyak Kolam</label>
+          {/* <label>Banyak Kolam</label>
           <input
             type="number"
             placeholder="Masukkan banyak kolam"
             onChange={(e) => setBanyakKolam(e.target.value)}
-          />
+          /> */}
           <button type="submit">Sign Up</button>
         </form>
-        {/* <div className="signup-link">
-          <p>Belum punya akun?</p>
-          <a href="/signup">Daftar</a>
-        </div> */}
+        <div className="signup-link">
+          <p>Sudah punya akun?</p>
+          <a href="/signin">Masuk</a>
+        </div>
       </div>
     </div>
   );

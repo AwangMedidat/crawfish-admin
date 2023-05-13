@@ -2,18 +2,39 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./SignIn.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignIn() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  axios.defaults.withCredentials = true;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("username ", username);
-    console.log("password ", password);
-    navigate("/");
+    // console.log("username ", username);
+    // console.log("password ", password);
+
+    const obj = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://localhost:8008/signin", obj)
+      .then((res) => {
+        console.log(res);
+        if (res.data.Status === "Success") {
+          navigate("/");
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const togglePasswordVisibility = () => {
@@ -24,11 +45,11 @@ function SignIn() {
       <div className="signin-container">
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
-          <label>Username</label>
+          <label>Email</label>
           <input
-            type="text"
-            placeholder="Enter your username"
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Enter your email"
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label>Password</label>
           <div className="password-input-container">
