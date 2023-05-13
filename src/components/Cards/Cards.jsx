@@ -16,6 +16,7 @@ const socket = io.connect("http://localhost:8008");
 
 const Cards = () => {
   const { id } = useParams();
+  const [historyTemperature, setHistoryTemperature] = useState([]);
   const [sensorData, setSensorData] = useState({
     temperature: 0,
     ph: 0,
@@ -63,6 +64,12 @@ const Cards = () => {
       kolam_id: id,
     };
 
+    if (historyTemperature.length > 6) {
+      historyTemperature.shift();
+    } else {
+      setHistoryTemperature([...historyTemperature, sensorData.temperature]);
+    }
+
     axios
       .post("http://localhost:8008/update-sensor", obj)
       .then((res) => {
@@ -82,6 +89,13 @@ const Cards = () => {
       {/* {cardsData.map((card, id) => {
         return ( */}
       <div className="parentContainer" key={1}>
+        {/* {historyTemperature && historyTemperature.length > 0 ? (
+          historyTemperature.map((e) => {
+            return <p>{e} !!</p>;
+          })
+        ) : (
+          <></>
+        )} */}
         <Card
           title={"Suhu"}
           color={{
@@ -94,7 +108,7 @@ const Cards = () => {
           series={[
             {
               name: "Suhu",
-              data: [31, 40, 28, 51, 42, 109, 100],
+              data: historyTemperature,
             },
           ]}
         />
