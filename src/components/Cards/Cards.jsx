@@ -26,9 +26,9 @@ const Cards = () => {
 
   const suhuKondisi = () => {
     if (sensorData.temperature < 24) {
-      return "Suhu dibawah batas Normal";
+      return "Suhu dibawah batas normal";
     } else if (sensorData.temperature > 30) {
-      return "Suhu diatas batas Normal";
+      return "Suhu diatas batas normal";
     } else {
       return "Normal";
     }
@@ -36,9 +36,9 @@ const Cards = () => {
 
   const pHKondisi = () => {
     if (sensorData.ph < 6.5) {
-      return "Keasaman dibawah batas Normal";
+      return "Keasaman dibawah batas normal";
     } else if (sensorData.ph > 8) {
-      return "Keasaman diatas batas Normal";
+      return "Keasaman diatas batas normal";
     } else {
       return "Normal";
     }
@@ -46,7 +46,7 @@ const Cards = () => {
 
   const kadarKondisi = () => {
     if (sensorData.ppm < 3) {
-      return "Kadar Air dibawah batas Normal";
+      return "Kadar Air dibawah batas normal";
     } else {
       return "Normal";
     }
@@ -54,7 +54,21 @@ const Cards = () => {
 
   useEffect(() => {
     socket.on("sensor data", (data) => {
+      console.log(data, "<<<<<< data socket");
       setSensorData(data);
+      console.log(historyTemperature.length, "<<< panjang arr history");
+      if (historyTemperature.length > 6) {
+        console.log(historyTemperature, "history suhu 1");
+        setHistoryTemperature((historyTemperature) =>
+          historyTemperature.shift()
+        );
+      } else {
+        setHistoryTemperature((historyTemperature) => [
+          ...historyTemperature,
+          data.temperature,
+        ]);
+        console.log(sensorData, "history suhu 2");
+      }
     });
 
     const obj = {
@@ -63,12 +77,6 @@ const Cards = () => {
       ppm: sensorData.ppm,
       kolam_id: id,
     };
-
-    if (historyTemperature.length > 6) {
-      historyTemperature.shift();
-    } else {
-      setHistoryTemperature([...historyTemperature, sensorData.temperature]);
-    }
 
     axios
       .post("http://localhost:8008/update-sensor", obj)
@@ -91,7 +99,7 @@ const Cards = () => {
       <div className="parentContainer" key={1}>
         {/* {historyTemperature && historyTemperature.length > 0 ? (
           historyTemperature.map((e) => {
-            return <p>{e} !!</p>;
+            return <p>{e} !!!@@</p>;
           })
         ) : (
           <></>

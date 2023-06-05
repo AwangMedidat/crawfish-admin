@@ -10,21 +10,8 @@ import Cards from "./components/Cards/Cards";
 import Home from "./Home";
 import HomeDetail from "./HomeDetail";
 import SignUp from "./components/SignUp/SignUp";
-const socket = io.connect("http://localhost:8008");
 
 function App() {
-  const [sensorData, setSensorData] = useState({
-    temperature: 0,
-    ph: 0,
-    ppm: 0,
-    buzzer_state: 0,
-  });
-
-  useEffect(() => {
-    socket.on("sensor data", (data) => {
-      setSensorData(data);
-    });
-  }, []);
   return (
     <BrowserRouter>
       <div className="App">
