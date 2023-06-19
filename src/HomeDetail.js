@@ -1,13 +1,11 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import io from "socket.io-client";
 import { useParams } from "react-router-dom";
 import MainDash from "./components/MainDash/MainDash";
 import RightSide from "./components/RigtSide/RightSide";
 import Sidebar from "./components/Sidebar";
 import Cards from "./components/Cards/Cards";
 import axios from "axios";
-// const socket = io.connect("http://localhost:8008");
 
 function HomeDetail() {
   const { id } = useParams();

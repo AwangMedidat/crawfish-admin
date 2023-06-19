@@ -13,12 +13,10 @@
 
 .App {
   color: var(--black);
-  background: linear-gradient(
-    106.37deg,
-    #ffe1bc 29.63%,
-    #ffcfd1 51.55%,
-    #f3c6f1 90.85%
-  );
+  background: linear-gradient(106.37deg,
+      #ffe1bc 29.63%,
+      #ffcfd1 51.55%,
+      #f3c6f1 90.85%);
   height: 100vh;
   display: flex;
   align-items: center;
@@ -35,10 +33,10 @@
   border-radius: 2rem;
   gap: 16px;
   grid-template-columns: 11rem auto;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
-.MainDash{
+.MainDash {
   /* padding-top: 1rem; */
   display: flex;
   flex-direction: column;
@@ -47,32 +45,33 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .MainDash{
-      justify-content:flex-start;
-      margin-top: 2rem;
+  .MainDash {
+    justify-content: flex-start;
+    margin-top: 2rem;
   }
 }
 
-@media screen and (max-width: 768px)
-{
-  .MainDash{
-      align-items: center;
+@media screen and (max-width: 768px) {
+  .MainDash {
+    align-items: center;
   }
 }
 
 
 @media screen and (max-width: 1200px) {
-  .AppGlass{
+  .AppGlass {
     grid-template-columns: 10% 50% auto;
     overflow-y: scroll;
-  } 
+  }
+
   /* .SignGlass{
     grid-template-columns: 10% 50% auto;
   }  */
 }
 
 @media screen and (max-width: 768px) {
-  .AppGlass{
+  .AppGlass {
     grid-template-columns: 1fr;
-  } 
+    overflow-y: scroll;
+  }
 }

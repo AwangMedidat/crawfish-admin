@@ -27,6 +27,7 @@ function SignIn() {
       .then((res) => {
         console.log(res);
         if (res.data.Status === "Success") {
+          console.log(res.data, "<<< data signin");
           navigate("/");
         } else {
           alert(res.data.Error);
@@ -50,6 +51,7 @@ function SignIn() {
             type="email"
             placeholder="Enter your email"
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <label>Password</label>
           <div className="password-input-container">
@@ -57,6 +59,7 @@ function SignIn() {
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <button
               type="button"

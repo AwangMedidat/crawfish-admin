@@ -12,11 +12,12 @@ import {
 import Card from "../Card/Card";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Table } from "antd";
 const socket = io.connect("http://localhost:8008");
 
 const Cards = () => {
   const { id } = useParams();
-  const [historyTemperature, setHistoryTemperature] = useState([]);
+  const [history, setHistory] = useState([]);
   const [sensorData, setSensorData] = useState({
     temperature: 0,
     ph: 0,
@@ -52,58 +53,100 @@ const Cards = () => {
     }
   };
 
+  const convertToGoodDate = (dateSensor) => {
+    const date = new Date(dateSensor);
+    const options = {
+      weekday: "long",
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+    const formattedDate = date.toLocaleString("id-ID", options);
+    return formattedDate;
+  };
+
+  const columns = [
+    {
+      title: "No",
+      dataIndex: "no",
+      key: "no",
+    },
+    {
+      title: "Suhu",
+      dataIndex: "suhu",
+      key: "suhu",
+    },
+    {
+      title: "Keasaman",
+      dataIndex: "ph",
+      key: "ph",
+    },
+    {
+      title: "Kadar Air",
+      dataIndex: "ppm",
+      key: "ppm",
+    },
+    {
+      title: "Tanggal",
+      dataIndex: "tanggal",
+      key: "tanggal",
+    },
+  ];
+
   useEffect(() => {
     socket.on("sensor data", (data) => {
-      console.log(data, "<<<<<< data socket");
       setSensorData(data);
-      console.log(historyTemperature.length, "<<< panjang arr history");
-      if (historyTemperature.length > 6) {
-        console.log(historyTemperature, "history suhu 1");
-        setHistoryTemperature((historyTemperature) =>
-          historyTemperature.shift()
-        );
-      } else {
-        setHistoryTemperature((historyTemperature) => [
-          ...historyTemperature,
-          data.temperature,
-        ]);
-        console.log(sensorData, "history suhu 2");
-      }
+
+      const obj = {
+        temperature: data.temperature,
+        ph: data.ph,
+        ppm: data.ppm,
+        kolam_id: id,
+      };
+
+      axios
+        .post("http://localhost:8008/post-sensor", obj)
+        .then((res) => {
+          if (res.data.Status === "Success Post Sensor") {
+          } else {
+            alert("Error");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     });
 
-    const obj = {
-      temperature: sensorData.temperature,
-      ph: sensorData.ph,
-      ppm: sensorData.ppm,
-      kolam_id: id,
-    };
-
     axios
-      .post("http://localhost:8008/update-sensor", obj)
+      .get(`http://localhost:8008/history/${id}`)
       .then((res) => {
-        console.log(res, "<<< data baca");
+        console.log(res, "<<< data baca history");
         if (res.data.Status === "Success") {
-          // window.location.reload();
+          let historyArr = res.data.data.map((e, i) => {
+            return {
+              key: i + 1,
+              no: i + 1,
+              suhu: e.temperature,
+              ph: e.ph,
+              ppm: e.ppm,
+              tanggal: convertToGoodDate(e.created_at),
+            };
+          });
+          setHistory(historyArr);
         } else {
-          alert("Error");
+          // alert("Error");
         }
       })
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [id]);
   return (
     <div className="Cards">
-      {/* {cardsData.map((card, id) => {
-        return ( */}
       <div className="parentContainer" key={1}>
-        {/* {historyTemperature && historyTemperature.length > 0 ? (
-          historyTemperature.map((e) => {
-            return <p>{e} !!!@@</p>;
-          })
-        ) : (
-          <></>
-        )} */}
         <Card
           title={"Suhu"}
           color={{
@@ -116,7 +159,7 @@ const Cards = () => {
           series={[
             {
               name: "Suhu",
-              data: historyTemperature,
+              data: [10, 100, 50, 70, 80, 30, 40],
             },
           ]}
         />
@@ -158,8 +201,7 @@ const Cards = () => {
           ]}
         />
       </div>
-      {/* );
-      })} */}
+      <Table dataSource={history} columns={columns} />
     </div>
   );
 };

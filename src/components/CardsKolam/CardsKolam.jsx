@@ -122,6 +122,7 @@ const CardsKolam = () => {
                           id="exampleFormControlInput1"
                           placeholder="Kolam 1"
                           onChange={(e) => setNamaKolam(e.target.value)}
+                          required
                         />
                       </div>
                       <div class="form-group">
@@ -134,6 +135,7 @@ const CardsKolam = () => {
                           id="exampleFormControlInput1"
                           placeholder="11"
                           onChange={(e) => setJumlahLobster(e.target.value)}
+                          required
                         />
                       </div>
                     </form>
@@ -213,6 +215,7 @@ const CardsKolam = () => {
                         id="exampleFormControlInput1"
                         placeholder="Kolam 1"
                         onChange={(e) => setNamaKolam(e.target.value)}
+                        required
                       />
                     </div>
                     <div class="form-group">
@@ -225,6 +228,7 @@ const CardsKolam = () => {
                         id="exampleFormControlInput1"
                         placeholder="11"
                         onChange={(e) => setJumlahLobster(e.target.value)}
+                        required
                       />
                     </div>
                   </form>

@@ -53,12 +53,14 @@ function SignUp() {
             type="text"
             placeholder="Masukkan username"
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
           <label>Email</label>
           <input
             type="email"
             placeholder="Masukkan email"
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <label>Password</label>
           <div className="password-input-container">
@@ -66,6 +68,7 @@ function SignUp() {
               type={showPassword ? "text" : "password"}
               placeholder="Masukkan password"
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <button
               type="button"
