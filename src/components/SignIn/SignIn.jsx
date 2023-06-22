@@ -27,7 +27,7 @@ function SignIn() {
       .then((res) => {
         console.log(res);
         if (res.data.Status === "Success") {
-          console.log(res.data, "<<< data signin");
+          // console.log(res.data, "<<< data signin");
           navigate("/");
         } else {
           alert(res.data.Error);

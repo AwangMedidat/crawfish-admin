@@ -15,7 +15,6 @@ function HomeDetail() {
     axios
       .get(`http://localhost:8008/kolamId/${id}`)
       .then((res) => {
-        console.log(res, "<<< data kolam by id");
         if (res.data.Status === "Success") {
           setNamaKolam(res.data.data[0].nama_kolam);
         } else {

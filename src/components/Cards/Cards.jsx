@@ -107,6 +107,7 @@ const Cards = () => {
         kolam_id: id,
       };
 
+      // setTimeout(() => {
       axios
         .post("http://localhost:8008/post-sensor", obj)
         .then((res) => {
@@ -118,12 +119,12 @@ const Cards = () => {
         .catch((e) => {
           console.log(e);
         });
+      // }, 10000);
     });
 
     axios
       .get(`http://localhost:8008/history/${id}`)
       .then((res) => {
-        console.log(res, "<<< data baca history");
         if (res.data.Status === "Success") {
           let historyArr = res.data.data.map((e, i) => {
             return {
@@ -182,7 +183,7 @@ const Cards = () => {
           ]}
         />
       </div>
-      <div className="parentContainer" key={2}>
+      <div className="parentContainer" key={3}>
         <Card
           title={"Kadar Air"}
           color={{
